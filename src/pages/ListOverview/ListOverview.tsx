@@ -2,14 +2,11 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { TagsContext } from "../../providers/TagsProvider";
-
-interface ITagsList {
-  [x: string]: [];
-}
+import { ListItemStyles } from "./ListOverview.styles";
 
 const ListOverviewPage = () => {
   const [listName, setListName] = useState("");
-  const { addList, tagsLists } = useContext(TagsContext);
+  const { addList, removeList, tagsLists } = useContext(TagsContext);
 
   const handleListName = (e: React.FormEvent<HTMLInputElement>) => {
     setListName(e.currentTarget.value);
@@ -27,16 +24,21 @@ const ListOverviewPage = () => {
         <h1>Overview of tags-lists</h1>
       </header>
       <main>
-        <div>
-          {tagsLists.map((tagsList) => {
-            const listName = Object.keys(tagsList)[0];
-            return (
-              <Link key={listName} to={`/${listName}`}>
-                {listName}
-              </Link>
-            );
-          })}
-        </div>
+        {tagsLists.length > 0 && (
+          <ul>
+            {tagsLists.map((tagsList) => {
+              return (
+                <ListItemStyles>
+                  <span>{tagsList.name}</span>
+                  <Link key={tagsList.name} to={`/${tagsList.id}`}>
+                    Bekijk
+                  </Link>
+                  <button onClick={() => removeList(tagsList.id)}>Verwijder</button>
+                </ListItemStyles>
+              );
+            })}
+          </ul>
+        )}
         <h2>Voeg nieuwe lijst toe</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="list-name">Naam</label>
