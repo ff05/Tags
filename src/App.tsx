@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ListOverviewPage from "./pages/ListOverview/ListOverview";
-import SingleListPage from "./pages/SingleList/SingleList";
+import ListOverviewPage from "./containers/ListOverview/ListOverview";
+import SingleListPage from "./containers/SingleList/SingleList";
 import TagsProvider from "./providers/TagsProvider";
 
 function App() {
