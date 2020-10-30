@@ -13,7 +13,7 @@ function App() {
           <Route exact path="/">
             <ListOverviewPage />
           </Route>
-          <Route exact path="/:listName">
+          <Route exact path="/:id">
             <SingleListPage />
           </Route>
         </Switch>
