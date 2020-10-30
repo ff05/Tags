@@ -1,45 +1,57 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { TagsContext } from "../../providers/TagsProvider";
+import { ITagsList, TagsContext } from "../../providers/TagsProvider";
 
 type ParamsProps = {
-  listName: string;
+  id: string;
 };
 
 const SingleListPage: React.FC = () => {
-  const history = useHistory();
   const [tagName, setTagName] = useState("");
-  const { listName } = useParams<ParamsProps>();
-  const { removeList } = useContext(TagsContext);
+  const { id } = useParams<ParamsProps>();
+  const { updateTagList, tagsLists } = useContext(TagsContext);
+  const [tagsList, setTagsList] = useState<ITagsList>();
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    removeList(listName);
-    history.push("/");
-  };
+  useEffect(() => {
+    setTagsList(tagsLists.find((list) => list.id === parseFloat(id)));
+  }, [tagsLists]);
 
-  const handleTagName = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     setTagName(e.currentTarget.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    updateTagList(tagName, parseFloat(id));
     setTagName("");
   };
 
   return (
     <div>
       <Link to="/">Terug naar overzicht</Link>
-      <h1>Taglijst {listName}</h1>
+      <header>
+        <h1>Tag lijst van {tagsList && tagsList.name}</h1>
+      </header>
+      {tagsList && tagsList.tags.length > 0 && (
+        <ul>
+          {tagsList.tags.map((tag) => (
+            <li>
+              {tag}
+              <button type="button" onClick={() => updateTagList(tag, parseFloat(id))}>
+                x
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <h2>Voeg nieuwe tag toe</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="list-name">Naam</label>
-        <input id="list-name" type="text" value={tagName} onChange={handleTagName} required />
+        <label htmlFor="tag-name">Naam</label>
+        <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
         <input type="submit" value="Voeg toe" />
       </form>
-      <button type="button" onClick={handleClick}>
-        Verwijder deze lijst
-      </button>
     </div>
   );
 };
