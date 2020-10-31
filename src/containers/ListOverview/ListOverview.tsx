@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-
+import Header from "../../components/Header/Header";
 import { TagsContext } from "../../providers/TagsProvider";
+import { MainStyles } from "../shared/MainStyles";
 import { ListItemStyles } from "./ListOverview.styles";
 
 const ListOverviewPage = () => {
@@ -20,10 +21,10 @@ const ListOverviewPage = () => {
 
   return (
     <>
-      <header>
+      <Header>
         <h1>Overview of tags-lists</h1>
-      </header>
-      <main>
+      </Header>
+      <MainStyles>
         {tagsLists.length > 0 && (
           <ul>
             {tagsLists.map((tagsList) => {
@@ -45,7 +46,7 @@ const ListOverviewPage = () => {
           <input id="list-name" type="text" value={listName} onChange={handleListName} required />
           <input type="submit" value="Voeg toe" />
         </form>
-      </main>
+      </MainStyles>
     </>
   );
 };
