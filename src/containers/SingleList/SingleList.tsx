@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import ClickableTag from "../../components/ClickableTag/ClickableTag";
+import Header from "../../components/Header/Header";
 import { ITagsList, TagsContext } from "../../providers/TagsProvider";
+import { MainStyles } from "../shared/MainStyles";
+import { TagsWrapper } from "./SingleList.styles";
 
 type ParamsProps = {
   id: string;
@@ -28,31 +31,32 @@ const SingleListPage: React.FC = () => {
     setTagName("");
   };
 
+  const handleClick = (tag: string) => {
+    updateTagList(tag, parseFloat(id));
+  };
+
   return (
-    <div>
-      <Link to="/">Terug naar overzicht</Link>
-      <header>
+    <>
+      <Header>
+        <Link to="/">Terug naar overzicht</Link>
         <h1>Tag lijst van {tagsList && tagsList.name}</h1>
-      </header>
-      {tagsList && tagsList.tags.length > 0 && (
-        <ul>
-          {tagsList.tags.map((tag) => (
-            <li>
-              {tag}
-              <button type="button" onClick={() => updateTagList(tag, parseFloat(id))}>
-                x
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      <h2>Voeg nieuwe tag toe</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="tag-name">Naam</label>
-        <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
-        <input type="submit" value="Voeg toe" />
-      </form>
-    </div>
+      </Header>
+      <MainStyles>
+        {tagsList && tagsList.tags.length > 0 && (
+          <TagsWrapper>
+            {tagsList.tags.map((tag) => (
+              <ClickableTag label={tag} onClick={() => handleClick(tag)} />
+            ))}
+          </TagsWrapper>
+        )}
+        <h2>Voeg nieuwe tag toe</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="tag-name">Naam</label>
+          <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
+          <input type="submit" value="Voeg toe" />
+        </form>
+      </MainStyles>
+    </>
   );
 };
 
