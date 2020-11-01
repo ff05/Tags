@@ -1,10 +1,16 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { colors } from "../../styles/colors";
 
 const TagsWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 16px;
+  display: flex;
+  flex-flow: row wrap;
+  margin: -8px;
 `;
 
-export { TagsWrapper };
+const CustomLinkStyles = styled(Link)`
+  color: ${colors.secondary};
+  font-size: 0.9rem;
+`;
+
+export { CustomLinkStyles, TagsWrapper };
