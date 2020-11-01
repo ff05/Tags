@@ -5,13 +5,13 @@ import Header from "../../components/Header/Header";
 import { ITagList, TagsContext } from "../../providers/TagsProvider";
 import { MainStyles } from "../shared/MainStyles";
 import { CustomLinkStyles, TagsWrapper } from "./SingleList.styles";
+import SingleListForm from "./SingleListForm";
 
 type ParamsProps = {
   id: string;
 };
 
 const SingleListPage: React.FC = () => {
-  const [tagName, setTagName] = useState("");
   const { id } = useParams<ParamsProps>();
   const { updateTagList, tagLists } = useContext(TagsContext);
   const [tagList, setTagList] = useState<ITagList>();
@@ -20,14 +20,15 @@ const SingleListPage: React.FC = () => {
     setTagList(tagLists.find((list) => list.id === parseFloat(id)));
   }, [tagLists]);
 
-  const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setTagName(e.currentTarget.value);
+  const validateFormField = (tagName: string) => {
+    if (tagList && tagList.tags.some((tag) => tag === tagName)) {
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = (tagName: string) => {
     updateTagList(tagName, parseFloat(id));
-    setTagName("");
   };
 
   const handleClick = (tag: string) => {
@@ -36,9 +37,7 @@ const SingleListPage: React.FC = () => {
 
   return (
     <>
-      <Header>
-        <h1>{tagList && tagList.name}</h1>
-      </Header>
+      <Header title={tagList ? tagList.name : ""} />
       <MainStyles>
         {tagList && tagList.tags.length > 0 ? (
           <TagsWrapper>
@@ -50,12 +49,8 @@ const SingleListPage: React.FC = () => {
           <i>Er zijn momenteel geen tags</i>
         )}
         <div>
-          <h2>Voeg een nieuwe tag toe:</h2>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="tag-name">Naam</label>
-            <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
-            <input type="submit" value="Voeg toe" />
-          </form>
+          <h2>Maak een tag aan:</h2>
+          <SingleListForm onSubmit={handleFormSubmit} validate={validateFormField} />
         </div>
         <CustomLinkStyles to="/">Terug naar categorieën</CustomLinkStyles>
       </MainStyles>
