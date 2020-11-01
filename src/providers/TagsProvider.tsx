@@ -54,10 +54,10 @@ const TagsProvider: React.FC = ({ children }) => {
     }
     let newList: ITagsList;
     if (currentList.tags.includes(tagName)) {
-      const [tagName, ...otherTags] = currentList.tags;
+      const newTags = currentList.tags.filter((tag) => tag !== tagName);
       newList = {
         ...currentList,
-        tags: [...otherTags],
+        tags: newTags,
       };
     } else {
       newList = {
