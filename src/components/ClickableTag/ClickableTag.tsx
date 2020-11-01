@@ -7,30 +7,19 @@ type Props = {
   onClick: () => void;
 };
 
-const WrapperStyles = styled.div`
+const WrapperStyles = styled.button`
   display: flex;
-  grid-column: span 1;
-  background-color: ${colors.primary};
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
   border-radius: 30px;
-  color: white;
-  padding: 8px 16px;
-  button {
-    background-color: transparent;
-    border: 0;
-    color: white;
-    border-left: 1px white solid;
-  }
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid black;
 `;
 
 const ClickableTag: React.FC<Props> = ({ label, onClick }) => {
-  return (
-    <WrapperStyles>
-      <span>{label}</span>
-      <button type="button" onClick={onClick}>
-        x
-      </button>
-    </WrapperStyles>
-  );
+  return <WrapperStyles onClick={onClick}>{label} x</WrapperStyles>;
 };
 
 export default ClickableTag;
