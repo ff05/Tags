@@ -4,6 +4,8 @@ html {
   font-family: -apple-system, BlinkMacSystemFont, segoe ui, roboto, oxygen, ubuntu, cantarell, fira sans, droid sans,
     helvetica neue, sans-serif;
   font-size: 16px;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 fieldset {
@@ -30,7 +32,70 @@ img {
   max-width: 100%;
 }
 
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: serif;
+}
+
+form {
+  width: 100%;
+}
+
 ul {
   list-style: none;
   padding: 0;
+}
+
+h1 {
+  display: inline-block;
+  font-size: 4rem;
+  margin-bottom: 24px;
+}
+
+h2 {
+  margin-bottom: 16px;
+}
+
+button,
+input[type="submit"] {
+  background-color: transparent;
+  border: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+i {
+  font-weight: 300;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  padding: 8px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+thead {
+  border-bottom: 1px solid black;
 }
