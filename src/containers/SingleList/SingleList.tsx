@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import ClickableTag from "../../components/ClickableTag/ClickableTag";
 import Header from "../../components/Header/Header";
 import { ITagsList, TagsContext } from "../../providers/TagsProvider";
 import { MainStyles } from "../shared/MainStyles";
-import { TagsWrapper } from "./SingleList.styles";
+import { CustomLinkStyles, TagsWrapper } from "./SingleList.styles";
 
 type ParamsProps = {
   id: string;
@@ -38,23 +37,27 @@ const SingleListPage: React.FC = () => {
   return (
     <>
       <Header>
-        <Link to="/">Terug naar overzicht</Link>
-        <h1>Tag lijst van {tagsList && tagsList.name}</h1>
+        <h1>{tagsList && tagsList.name}</h1>
       </Header>
       <MainStyles>
-        {tagsList && tagsList.tags.length > 0 && (
+        {tagsList && tagsList.tags.length > 0 ? (
           <TagsWrapper>
             {tagsList.tags.map((tag) => (
-              <ClickableTag label={tag} onClick={() => handleClick(tag)} />
+              <ClickableTag key={tag} label={tag} onClick={() => handleClick(tag)} />
             ))}
           </TagsWrapper>
+        ) : (
+          <i>Er zijn momenteel geen tags</i>
         )}
-        <h2>Voeg nieuwe tag toe</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="tag-name">Naam</label>
-          <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
-          <input type="submit" value="Voeg toe" />
-        </form>
+        <div>
+          <h2>Voeg een nieuwe tag toe:</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="tag-name">Naam</label>
+            <input id="tag-name" type="text" value={tagName} onChange={handleOnChange} required />
+            <input type="submit" value="Voeg toe" />
+          </form>
+        </div>
+        <CustomLinkStyles to="/">Terug naar categorieën</CustomLinkStyles>
       </MainStyles>
     </>
   );
