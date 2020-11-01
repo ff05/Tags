@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import { TagsContext } from "../../providers/TagsProvider";
 import { MainStyles } from "../shared/MainStyles";
-import { ListItemStyles } from "./ListOverview.styles";
+import { CustomDataCell, TableStyles, TagsListStyles } from "./ListOverview.styles";
+import { ReactComponent as GoToIcon } from "../../assets/go-to.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/delete.svg";
 
 const ListOverviewPage = () => {
-  const [listName, setListName] = useState("");
+  const [listName, setListName] = useState<string>("");
+  const [highlightedItemId, sethighlightedItemId] = useState<number>();
   const { addList, removeList, tagsLists } = useContext(TagsContext);
+  const [alertIsOpen, setAlertIsOpen] = useState<boolean>(false);
 
   const handleListName = (e: React.FormEvent<HTMLInputElement>) => {
     setListName(e.currentTarget.value);
@@ -19,33 +23,65 @@ const ListOverviewPage = () => {
     setListName("");
   };
 
+  const handleMouseEnter = (e: React.MouseEvent, id: number): void => {
+    sethighlightedItemId(id);
+  };
+
+  const handleMouseLeave = () => {
+    sethighlightedItemId(undefined);
+  };
+
+  const handleClick = () => {
+    setAlertIsOpen(true);
+  };
+
   return (
     <>
       <Header>
-        <h1>Overview of tags-lists</h1>
+        <h1>Categorieën</h1>
       </Header>
       <MainStyles>
-        {tagsLists.length > 0 && (
-          <ul>
-            {tagsLists.map((tagsList) => {
-              return (
-                <ListItemStyles>
-                  <span>{tagsList.name}</span>
-                  <Link key={tagsList.name} to={`/${tagsList.id}`}>
-                    Bekijk
-                  </Link>
-                  <button onClick={() => removeList(tagsList.id)}>Verwijder</button>
-                </ListItemStyles>
-              );
-            })}
-          </ul>
+        {tagsLists.length > 0 ? (
+          <TableStyles>
+            <thead>
+              <tr>
+                <th>Naam:</th>
+                <th>Bekijk:</th>
+                <th>Verwijder:</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tagsLists.map((tagsList) => (
+                <tr key={tagsList.id}>
+                  <CustomDataCell highlighted={highlightedItemId === tagsList.id}>{tagsList.name}</CustomDataCell>
+                  <td>
+                    <Link key={tagsList.name} to={`/${tagsList.id}`}>
+                      <GoToIcon
+                        onMouseEnter={(e) => handleMouseEnter(e, tagsList.id)}
+                        onMouseLeave={handleMouseLeave}
+                      />
+                    </Link>
+                  </td>
+                  <td>
+                    <button onClick={() => removeList(tagsList.id)}>
+                      <DeleteIcon />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </TableStyles>
+        ) : (
+          <i>Er zijn momenteel geen tag lijstjes</i>
         )}
-        <h2>Voeg nieuwe lijst toe</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="list-name">Naam</label>
-          <input id="list-name" type="text" value={listName} onChange={handleListName} required />
-          <input type="submit" value="Voeg toe" />
-        </form>
+        <div>
+          <h2>Voeg een nieuwe lijst toe:</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="list-name">Naam</label>
+            <input id="list-name" type="text" value={listName} onChange={handleListName} required />
+            <input type="submit" value="Voeg toe" />
+          </form>
+        </div>
       </MainStyles>
     </>
   );
