@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import { TagsContext } from "../../providers/TagsProvider";
 import { MainStyles } from "../shared/MainStyles";
-import { CustomDataCell, TableStyles, TagsListStyles } from "./ListOverview.styles";
+import { CustomDataCell, TableStyles, TagListStyles } from "./ListOverview.styles";
 import { ReactComponent as GoToIcon } from "../../assets/go-to.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/delete.svg";
 
 const ListOverviewPage = () => {
   const [listName, setListName] = useState<string>("");
   const [highlightedItemId, sethighlightedItemId] = useState<number>();
-  const { addList, removeList, tagsLists } = useContext(TagsContext);
+  const { addList, removeList, tagLists } = useContext(TagsContext);
   const [alertIsOpen, setAlertIsOpen] = useState<boolean>(false);
 
   const handleListName = (e: React.FormEvent<HTMLInputElement>) => {
@@ -41,7 +41,7 @@ const ListOverviewPage = () => {
         <h1>Categorieën</h1>
       </Header>
       <MainStyles>
-        {tagsLists.length > 0 ? (
+        {tagLists.length > 0 ? (
           <TableStyles>
             <thead>
               <tr>
@@ -51,19 +51,16 @@ const ListOverviewPage = () => {
               </tr>
             </thead>
             <tbody>
-              {tagsLists.map((tagsList) => (
-                <tr key={tagsList.id}>
-                  <CustomDataCell highlighted={highlightedItemId === tagsList.id}>{tagsList.name}</CustomDataCell>
+              {tagLists.map((tagList) => (
+                <tr key={tagList.id}>
+                  <CustomDataCell highlighted={highlightedItemId === tagList.id}>{tagList.name}</CustomDataCell>
                   <td>
-                    <Link key={tagsList.name} to={`/${tagsList.id}`}>
-                      <GoToIcon
-                        onMouseEnter={(e) => handleMouseEnter(e, tagsList.id)}
-                        onMouseLeave={handleMouseLeave}
-                      />
+                    <Link key={tagList.name} to={`/${tagList.id}`}>
+                      <GoToIcon onMouseEnter={(e) => handleMouseEnter(e, tagList.id)} onMouseLeave={handleMouseLeave} />
                     </Link>
                   </td>
                   <td>
-                    <button onClick={() => removeList(tagsList.id)}>
+                    <button onClick={() => removeList(tagList.id)}>
                       <DeleteIcon />
                     </button>
                   </td>

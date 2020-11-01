@@ -10,7 +10,7 @@ const TableStyles = styled.table`
   }
 `;
 
-const TagsListStyles = styled.ul`
+const TagListStyles = styled.ul`
   border: double 5px black;
 `;
 
@@ -23,4 +23,4 @@ const CustomDataCell = styled.td<CustomDataCellProps>`
   transition: 0.3s ease;
 `;
 
-export { CustomDataCell, TableStyles, TagsListStyles };
+export { CustomDataCell, TableStyles, TagListStyles };

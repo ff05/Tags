@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClickableTag from "../../components/ClickableTag/ClickableTag";
 import Header from "../../components/Header/Header";
-import { ITagsList, TagsContext } from "../../providers/TagsProvider";
+import { ITagList, TagsContext } from "../../providers/TagsProvider";
 import { MainStyles } from "../shared/MainStyles";
 import { CustomLinkStyles, TagsWrapper } from "./SingleList.styles";
 
@@ -13,12 +13,12 @@ type ParamsProps = {
 const SingleListPage: React.FC = () => {
   const [tagName, setTagName] = useState("");
   const { id } = useParams<ParamsProps>();
-  const { updateTagList, tagsLists } = useContext(TagsContext);
-  const [tagsList, setTagsList] = useState<ITagsList>();
+  const { updateTagList, tagLists } = useContext(TagsContext);
+  const [tagList, setTagList] = useState<ITagList>();
 
   useEffect(() => {
-    setTagsList(tagsLists.find((list) => list.id === parseFloat(id)));
-  }, [tagsLists]);
+    setTagList(tagLists.find((list) => list.id === parseFloat(id)));
+  }, [tagLists]);
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     setTagName(e.currentTarget.value);
@@ -37,12 +37,12 @@ const SingleListPage: React.FC = () => {
   return (
     <>
       <Header>
-        <h1>{tagsList && tagsList.name}</h1>
+        <h1>{tagList && tagList.name}</h1>
       </Header>
       <MainStyles>
-        {tagsList && tagsList.tags.length > 0 ? (
+        {tagList && tagList.tags.length > 0 ? (
           <TagsWrapper>
-            {tagsList.tags.map((tag) => (
+            {tagList.tags.map((tag) => (
               <ClickableTag key={tag} label={tag} onClick={() => handleClick(tag)} />
             ))}
           </TagsWrapper>

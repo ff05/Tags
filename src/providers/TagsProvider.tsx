@@ -3,33 +3,33 @@ import { change, remove, fetch, add } from "../utils/api";
 
 const URL = "http://localhost:3004/tagLists";
 
-export interface ITagsList {
+export interface ITagList {
   id: number;
   name: string;
   tags: string[];
 }
 
 interface IContextProps {
-  tagsLists: ITagsList[];
+  tagLists: ITagList[];
   addList: (name: string) => void;
   removeList: (id: number) => void;
   updateTagList: (tagName: string, listId: number) => void;
 }
 
 export const TagsContext = createContext<IContextProps>({
-  tagsLists: [],
+  tagLists: [],
   addList: () => {},
   removeList: () => {},
   updateTagList: () => {},
 });
 
 const TagsProvider: React.FC = ({ children }) => {
-  const [tagsLists, setTagsLists] = useState<ITagsList[]>([]);
+  const [tagLists, setTagLists] = useState<ITagList[]>([]);
   const [dbUpdated, setDbUpdated] = useState(false);
 
   useEffect(() => {
-    fetch<ITagsList[]>(URL)
-      .then((data) => setTagsLists(data))
+    fetch<ITagList[]>(URL)
+      .then((data) => setTagLists(data))
       .catch((error) => console.error(error));
   }, [dbUpdated]);
 
@@ -48,11 +48,11 @@ const TagsProvider: React.FC = ({ children }) => {
   };
 
   const updateTagList: (tagName: string, listId: number) => void = (tagName: string, listId: number) => {
-    const currentList = tagsLists.find((list) => list.id === listId);
+    const currentList = tagLists.find((list) => list.id === listId);
     if (!currentList) {
       return;
     }
-    let newList: ITagsList;
+    let newList: ITagList;
     if (currentList.tags.includes(tagName)) {
       const newTags = currentList.tags.filter((tag) => tag !== tagName);
       newList = {
@@ -71,7 +71,7 @@ const TagsProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <TagsContext.Provider value={{ addList, updateTagList, tagsLists, removeList }}>{children}</TagsContext.Provider>
+    <TagsContext.Provider value={{ addList, updateTagList, tagLists, removeList }}>{children}</TagsContext.Provider>
   );
 };
 
