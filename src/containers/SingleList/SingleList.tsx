@@ -18,7 +18,7 @@ const SingleListPage: React.FC = () => {
 
   useEffect(() => {
     setTagList(tagLists.find((list) => list.id === parseFloat(id)));
-  }, [tagLists]);
+  }, [id, tagLists]);
 
   const validateFormField = (tagName: string) => {
     if (tagList && tagList.tags.some((tag) => tag === tagName)) {
