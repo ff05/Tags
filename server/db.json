@@ -1,0 +1,35 @@
+{
+  "tagLists": [
+    {
+      "name": "Mobiele telefoons",
+      "tags": [
+        "Apple",
+        "Samsung",
+        "Huawei",
+        "One Plus",
+        "Motorola",
+        "FairPhone",
+        "Xiaomi"
+      ],
+      "id": 3
+    },
+    {
+      "name": "Games",
+      "tags": [
+        "RPG",
+        "FPS",
+        "MMORPG",
+        "Adventure",
+        "Puzzle",
+        "RTS",
+        "Sci-fi"
+      ],
+      "id": 7
+    },
+    {
+      "name": "Kleding",
+      "tags": [],
+      "id": 8
+    }
+  ]
+}
