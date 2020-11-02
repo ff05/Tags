@@ -3,20 +3,20 @@ import { Buttons, Dialog, Wrapper } from "./ConfirmationDialog.styles";
 import Button from "../../components/Button/Button";
 
 type Props = {
-  handleClick: (value: boolean) => void;
+  onClick: (value: boolean) => void;
   label: string;
 };
 
-const ConfirmationDialog: React.FC<Props> = ({ handleClick, label }) => {
+const ConfirmationDialog: React.FC<Props> = ({ onClick, label }) => {
   return (
     <Wrapper>
       <Dialog>
         <p>{label}</p>
         <Buttons>
-          <Button onClick={() => handleClick(true)} variant="secondary">
+          <Button onClick={() => onClick(true)} variant="secondary">
             Ja
           </Button>
-          <Button onClick={() => handleClick(false)} variant="primary">
+          <Button onClick={() => onClick(false)} variant="primary">
             Nee
           </Button>
         </Buttons>

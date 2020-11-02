@@ -67,7 +67,7 @@ const ListOverviewPage = () => {
       </MainStyles>
       {alertIsOpen && (
         <ConfirmationDialog
-          handleClick={handleConfirmation}
+          onClick={handleConfirmation}
           label={`Weet je zeker dat je ${tagListToRemove && tagListToRemove.name} wilt verwijderen?`}
         />
       )}
