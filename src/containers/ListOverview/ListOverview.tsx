@@ -52,9 +52,9 @@ const ListOverviewPage = () => {
         {tagLists.length > 0 ? (
           <ListOverviewTable
             list={tagLists}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            handleClick={handleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
             highlightedItemId={highlightedItemId}
           />
         ) : (

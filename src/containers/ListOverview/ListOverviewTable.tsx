@@ -8,19 +8,13 @@ import Button from "../../components/Button/Button";
 
 type Props = {
   list: ITagList[];
-  handleMouseEnter: (id: number) => void;
-  handleMouseLeave: () => void;
-  handleClick: (list: ITagList) => void;
+  onMouseEnter: (id: number) => void;
+  onMouseLeave: () => void;
+  onClick: (list: ITagList) => void;
   highlightedItemId?: number;
 };
 
-const ListOverviewTable: React.FC<Props> = ({
-  list,
-  handleMouseEnter,
-  handleMouseLeave,
-  handleClick,
-  highlightedItemId,
-}) => {
+const ListOverviewTable: React.FC<Props> = ({ list, onMouseEnter, onMouseLeave, onClick, highlightedItemId }) => {
   return (
     <ListOverviewTableStyles>
       <thead>
@@ -36,11 +30,11 @@ const ListOverviewTable: React.FC<Props> = ({
             <CustomDataCell highlighted={highlightedItemId === tagList.id}>{tagList.name}</CustomDataCell>
             <td>
               <Link key={tagList.name} to={`/${tagList.id}`}>
-                <GoToIcon onMouseEnter={() => handleMouseEnter(tagList.id)} onMouseLeave={handleMouseLeave} />
+                <GoToIcon onMouseEnter={() => onMouseEnter(tagList.id)} onMouseLeave={onMouseLeave} />
               </Link>
             </td>
             <td>
-              <Button onClick={() => handleClick(tagList)}>
+              <Button onClick={() => onClick(tagList)}>
                 <DeleteIcon />
               </Button>
             </td>
