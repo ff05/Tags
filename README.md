@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Outline
+
+This is a web-app to create, remove and show lists of tags, also know as 'categories'. Then, once you entered a list, you can create and remove tags for this list.
+
 ## Available Scripts
 
 In the project directory, please run
