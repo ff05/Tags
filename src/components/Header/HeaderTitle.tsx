@@ -1,5 +1,4 @@
 import React from "react";
-import { HeaderStyles } from "./Header.styles";
 
 export type TitleProps = {
   title: string;
